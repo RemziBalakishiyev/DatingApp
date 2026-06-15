@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { supabase } from '../lib/supabaseClient'
+import { isSupabaseConfigured, supabase } from '../lib/supabaseClient'
 
 const DATE_TYPES = [
   { value: 'Səhər yeməyi', emoji: '🥐' },
@@ -54,6 +54,13 @@ export default function DateForm({ onSuccess }) {
     setSubmitError('')
 
     if (!validate()) return
+
+    if (!isSupabaseConfigured || !supabase) {
+      setSubmitError(
+        'Supabase konfiqurasiya edilməyib. Vercel-də environment variables əlavə edin.',
+      )
+      return
+    }
 
     setIsLoading(true)
 

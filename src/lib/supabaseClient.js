@@ -3,13 +3,14 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-if (!supabaseUrl || !supabaseAnonKey) {
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey)
+
+if (!isSupabaseConfigured) {
   console.warn(
-    'Supabase env variables tapılmadı. .env faylında VITE_SUPABASE_URL və VITE_SUPABASE_ANON_KEY təyin edin.',
+    'Supabase env variables tapılmadı. VITE_SUPABASE_URL və VITE_SUPABASE_ANON_KEY təyin edin.',
   )
 }
 
-export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || '',
-)
+export const supabase = isSupabaseConfigured
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : null

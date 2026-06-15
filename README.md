@@ -112,6 +112,23 @@ npm run preview
 | message       | text       | NOT NULL                    |
 | created_at    | timestamptz| DEFAULT `now()`             |
 
+## Vercel deploy
+
+Vite layihələrində env dəyişənləri **build zamanı** daxil edilir. Vercel-də bunları əlavə etməlisiniz:
+
+1. [Vercel Dashboard](https://vercel.com) → layihəniz → **Settings** → **Environment Variables**
+2. Bu dəyişənləri əlavə edin:
+
+| Name | Value |
+|------|-------|
+| `VITE_SUPABASE_URL` | `https://eckeheroqqswytqeengr.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Supabase publishable/anon key |
+
+3. **Production**, **Preview** və **Development** üçün hamısını seçin
+4. **Deployments** → son deploy → **Redeploy** (env əlavə etdikdən sonra mütləq yenidən deploy edin)
+
+> `supabaseUrl is required` xətası env dəyişənlərinin Vercel-də təyin olunmadığını göstərir.
+
 ## Troubleshooting
 
 - **Insert xətası:** RLS policy-nin düzgün yaradıldığını yoxlayın
